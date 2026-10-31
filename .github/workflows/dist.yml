@@ -153,6 +153,13 @@ jobs:
           path: sage-local-artifact/sage-local.tar
           name: sage-local-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.arch }}
 
+      - name: Upload logs artifact
+        uses: actions/upload-artifact@v4
+        if:   always()
+        with:
+          name: logs-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.arch }}
+          path: ./logs
+
 
   build_wheels_windows:
     name: Build wheels on ${{ matrix.os }} using ${{ matrix.env }}
