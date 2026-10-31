@@ -141,6 +141,19 @@ jobs:
           name: ${{ matrix.os }}-${{ matrix.build }}-${{ matrix.arch }}-wheels
           path: ./wheelhouse/*.whl
 
+      - name: Prepare sage-local artifact
+        if: always()
+        run: |
+          mkdir -p sage-local-artifact && tar -cf - local > sage-local-artifact/sage-local.tar
+
+      - name: Upload sage-local artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          path: sage-local-artifact/sage-local.tar
+          name: sage-local-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.arch }}
+
+
   build_wheels_windows:
     name: Build wheels on ${{ matrix.os }} using ${{ matrix.env }}
     runs-on: ${{ matrix.os }}
