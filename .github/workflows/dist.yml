@@ -142,12 +142,12 @@ jobs:
           path: ./wheelhouse/*.whl
 
       - name: Prepare sage-local artifact
-        if: always()
+        if: always() && contains(matrix.os, 'macos')
         run: |
           mkdir -p sage-local-artifact && tar -cf - local > sage-local-artifact/sage-local.tar
 
       - name: Upload sage-local artifact
-        if: always()
+        if: always() && contains(matrix.os, 'macos')
         uses: actions/upload-artifact@v4
         with:
           path: sage-local-artifact/sage-local.tar
@@ -155,7 +155,7 @@ jobs:
 
       - name: Upload logs artifact
         uses: actions/upload-artifact@v4
-        if:   always()
+        if: always() && contains(matrix.os, 'macos')
         with:
           name: logs-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.arch }}
           path: ./logs
